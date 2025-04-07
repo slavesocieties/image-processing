@@ -36,7 +36,7 @@ counts = Counter(dataset.targets)
 for class_idx, count in counts.items():
     print(f"{class_names[class_idx]}: {count}")
 
-loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True, num_workers=os.cpu_count() - 1)
+loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 
 # --- MODEL ---
 # Use the most up-to-date default ImageNet weights
@@ -49,7 +49,7 @@ model = model.to(device)
 
 # --- LOSS FUNCTION (with class weights) ---
 # Adjust weights to counter imbalance (e.g., inverse frequency)
-weight = torch.tensor([1.0, 10.0])  # [one_folio, two_folios]
+weight = torch.tensor([16.0, 15.0])  # [one_folio, two_folios]
 criterion = nn.CrossEntropyLoss(weight=weight)
 
 # --- OPTIMIZER ---
@@ -57,6 +57,7 @@ optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE)
 
 # --- TRAINING LOOP ---
 for epoch in range(NUM_EPOCHS):
+    print(f"Starting training epoch {epoch + 1}.")
     model.train()
     running_loss = 0.0
 
@@ -75,5 +76,6 @@ for epoch in range(NUM_EPOCHS):
     print(f"Epoch {epoch+1}/{NUM_EPOCHS}, Loss: {avg_loss:.4f}")
 
 # --- SAVE MODEL ---
-torch.save(model.state_dict(), "folio_classifier.pth")
-print("Model saved to folio_classifier.pth")
+model_save_path = "upside_down.pth"
+torch.save(model.state_dict(), model_save_path)
+print(f"Model saved to {model_save_path}")
