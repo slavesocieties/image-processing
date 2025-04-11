@@ -1,0 +1,7 @@
+1. classify image as single folio or two folio
+2. ensure appropriate orientation based on folio number classification
+3. segment to folio(s) based on folio number classification
+4. ensure each cropped single folio image is rightside up
+5. segment to primary text region
+6. deslant
+7. send on for transcription
