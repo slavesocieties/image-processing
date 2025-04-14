@@ -14,9 +14,9 @@ transform = transforms.Compose([
 ])
 
 # Map class indices back to labels
-CLASS_NAMES = ['one_folio', 'two_folios']
+CLASS_NAMES = ['rightside_up', 'upside_down']
 
-def predict_folio_class(image_path, model_path="folio_classifier.pth"):
+def predict_folio_class(image_path, model_path="upside_down.pth"):
     # Load image
     image = Image.open(image_path).convert("RGB")
     image_tensor = transform(image).unsqueeze(0)  # Add batch dimension
@@ -41,6 +41,6 @@ def predict_folio_class(image_path, model_path="folio_classifier.pth"):
 # single but rotated: 701241-0144.jpg
 # standard double: 31510-0107.jpg
 # rotated double: 770016-0392.jpg
-img_path = "sample_images/two_folios/770016-0392.jpg"
+img_path = "sample_images/102624-0240.jpg"
 label, conf = predict_folio_class(img_path)
 print(f"Predicted: {label} (Confidence: {conf:.2%})")

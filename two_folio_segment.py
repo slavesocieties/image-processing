@@ -8,8 +8,8 @@ from torch import nn
 
 # ---------- CONFIG ----------
 IMAGE_PATH = "sample_images/two_folio/DSC_0013.JPG"
-MODEL_PATH = "unet_folio_split.pth"
-IMG_SIZE = (960, 640)  # width x height (must match model)
+MODEL_PATH = "models/unet_folio_segmentation.pth"
+IMG_SIZE = (640, 960)  # width x height (must match model)
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 SPINE_OVERLAP = 40  # pixels to include around center when cropping left/right
 

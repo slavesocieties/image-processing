@@ -1,0 +1,3 @@
+-remove text crop
+-retrain upside down checker on folio cropped images
+-add handling for obvious edge cases (i.e. folio crops containing a very small portion of image)

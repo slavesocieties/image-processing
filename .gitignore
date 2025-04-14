@@ -1,4 +1,5 @@
 sample_images/
-*.pth
+models/
 two_folios/
 preprocessed/
+processed/
