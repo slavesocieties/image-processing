@@ -5,3 +5,4 @@ preprocessed/
 processed/
 upright_training/
 __pycache__/
+object_keys_remaining.txt
