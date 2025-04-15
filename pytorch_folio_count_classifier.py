@@ -1,13 +1,12 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torchvision import datasets, transforms, models
+from torchvision import datasets, transforms
 from torch.utils.data import DataLoader
 from torchvision.models import resnet18, ResNet18_Weights
-import os
 
 # --- SETTINGS ---
-DATA_DIR = "sample_images"  # <-- change this to your dataset path
+DATA_DIR = "upright_training"  # <-- change this to your dataset path
 BATCH_SIZE = 16
 NUM_EPOCHS = 5
 LEARNING_RATE = 1e-4

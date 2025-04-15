@@ -3,3 +3,5 @@ models/
 two_folios/
 preprocessed/
 processed/
+upright_training/
+__pycache__/

@@ -1,3 +1,6 @@
--remove text crop
 -retrain upside down checker on folio cropped images
+-assess performance of text crop vis a vis marginal notation (remove if not effective)
 -add handling for obvious edge cases (i.e. folio crops containing a very small portion of image)
+-make sure that A and B assigned correctly for upside down two-folio images
+-"skinny" two-folio images and "fat" one-folio images???
+-expand all training sets, retrain models
