@@ -250,7 +250,11 @@ class AlphaPipeline:
             if ori_label == "upside_down":
                 folio_img = folio_img.rotate(180, expand=False)
                 page_img = page_img.rotate(180, expand=False)                                
-                folio_bbox = reflect_bbox_180(folio_bbox, page_w, page_h)                
+                folio_bbox = reflect_bbox_180(folio_bbox, page_w, page_h)
+                if suffix == "A":
+                    unique_id = base_id + "B"
+                elif suffix == "B":
+                    unique_id = base_id + "A"                
             folio_img.save(self.outdir / f"{unique_id}-folio.jpg")
 
             # --- 5. text‑region segmentation -----------------------------------
@@ -293,6 +297,9 @@ class AlphaPipeline:
         w,h = page_img.size
         if not two_folios:
             bbox = self.folio_seg.predict_bbox(page_img) or (0,0,w,h)
+            bbox_area = (bbox[2] - bbox[0]) * (bbox[3] - bbox[1])
+            if bbox_area < .1 * w * h:
+                return []
             return [("", page_img, bbox)]
         # two folios: split with 5% overlap around center
         mid = w // 2
@@ -302,13 +309,15 @@ class AlphaPipeline:
         left_bbox  = self.folio_seg.predict_bbox(left_crop)
         right_bbox = self.folio_seg.predict_bbox(right_crop)
         # translate bboxes back to page coords
-        folios = []
+        folios = []        
         if left_bbox:
             l,t,r,b = left_bbox
-            folios.append(("A", left_crop, (l, t, r, b)))
+            if (r - l) * (b - t) > .1 * w * h:
+                folios.append(("A", left_crop, (l, t, r, b)))
         if right_bbox:
             l,t,r,b = right_bbox
-            folios.append(("B", right_crop, (mid-overlap+l, t, mid-overlap+r, b)))
+            if (r - l) * (b - t) > .1 * w * h:
+                folios.append(("B", right_crop, (mid-overlap+l, t, mid-overlap+r, b)))
         return folios    
 
     # ----------------------------------------------------
